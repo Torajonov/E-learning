@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+  <title>{% block title %}{% endblock title %} - StartUP!</title>
+  {% block head %}
+  {% endblock head %}
+  <style>
+    .showpassword {
+      cursor: pointer;
+    }
+
+    .showpasswordsingup {
+      cursor: pointer;
+    }
+
+    /*
+ * Footer
+ */
+    .blog-footer {
+      padding: 2.5rem 0;
+      color: #999;
+      text-align: center;
+      background-color: #f9f9f9;
+      border-top: .05rem solid #e5e5e5;
+    }
+
+    .blog-footer p:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">StartUP</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'courses' %}">Courses </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'bloghome' %}">Blog</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'pricing' %}">Premium</a>
+          </li>
+
+        </ul>
+        <ul class="navbar-nav">
+          {% if user.is_authenticated %}
+          <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="studentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         <img src="https://img.icons8.com/color/24/000000/user-male-circle.png"/> {{ request.user|upper }}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="studentDropdown">
+          <a class="dropdown-item" href="{% url 'info' %}">User Account</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'handlelogout' %}">Logout</a>
+        </div>
+      </li>
+          {% else %}
+          <li class="nav-item active">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-outline-success mx-2 my-1 btn-sm" data-toggle="modal"
+              data-target="#loginModal">Login</button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="btn btn-success mx-1 my-1 btn-sm" data-toggle="modal"
+              data-target="#singupModal">Ragister</button>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  {% if user.is_authenticated %}
+  {% else %}
+  <!-- Login Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">Login</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              <center>
+                <h4 class="card-title">Login</h4>
+              </center>
+              <form action="{% url 'handlelogin' %}" method="post" autocomplete="off">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="username">Username <b style="color: red;">*</b></label>
+                  <input type="text" name="login_username" id="login_username" class="form-control form-control-sm"
+                    placeholder="Enter Username" aria-describedby="helpIdusername" required>
+                  <div id="helpIdusername" class="text-muted login-key-error-username" style="display: none;">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="password">Password <b style="color: red;">*</b></label>
+                  <input type="password" name="login_password" id="login_password"
+                    class="form-control form-control-sm passwordshow" placeholder="Enter Password"
+                    aria-describedby="password" required>
+                  <small class="float-right showpassword">SHOW</small>
+                </div>
+
+                <input type="submit" class="btn btn-primary" value="Login" id="loginsubmit">
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Singup Modal -->
+  <div class="modal fade" id="singupModal" tabindex="-1" aria-labelledby="singupModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="singupModalLabel">Ragister</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              <center>
+                <h4 class="card-title">Ragister</h4>
+              </center>
+              <form action="{% url 'handleSignup' %}" method="post" autocomplete="off">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="username">Username <b style="color: red;">*</b></label>
+                  <input type="text" name="username" id="username" class="form-control form-control-sm"
+                    placeholder="Enter Username" aria-describedby="helpIdusername" required>
+                  <div id="helpIdusername" class="text-muted key-error-username" style="display: none;"></div>
+                </div>
+
+                <div class="form-group">
+                  <label for="emailid">Email <b style="color: red;">*</b></label>
+                  <input type="email" name="emailid" id="emailid" class="form-control form-control-sm"
+                    placeholder="Enter Email" aria-describedby="email" required>
+                  <div id="helpIdemail" class="text-muted key-error-email" style="display: none;"></div>
+                </div>
+
+                <div class="form-group">
+                  <label for="mobile">Mobile No <b style="color: red;">*</b></label>
+                  <input type="tel" name="mobileno" id="mobileno" class="form-control form-control-sm"
+                    placeholder="Enter Mobile No 9876543210" aria-describedby="phone" pattern="^\d{10}$" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="dob">Date of Birth <b style="color: red;">*</b></label>
+                  <input type="date" name="dob" id="dob" class="form-control form-control-sm"
+                    placeholder="Enter Date of Birth" aria-describedby="dob" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="address">Address <b style="color: red;">*</b></label>
+                  <input type="text" name="address" id="address" class="form-control form-control-sm"
+                    placeholder="Enter Full Address" aria-describedby="address" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="password">Password <b style="color: red;">*</b></label>
+                  <input type="password" name="password" id="password"
+                    class="form-control form-control-sm passwordshowsingup" placeholder="Enter Password"
+                    aria-describedby="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+                  <small class="float-right showpasswordsingup">SHOW</small>
+                  <small>Password must contain the following:</small>
+                  <small><b>lowercase</b>, </small>
+                  <small><b>capital (uppercase)</b>, </small>
+                  <small><b>number</b></small>
+                </div>
+                <input type="submit" class="btn btn-primary" value="Ragister" id="registersubmit">
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% block body %}
+  {% endblock body %}
+  <footer class="blog-footer">
+    <p>Made with ❤️ by <a href="https://twitter.com/yogeshnile">@YogeshNile</a></p>
+    <p>
+      <a href="#">Back to top</a>
+    </p>
+  </footer>
+
+  <!-- Optional JavaScript -->
+  {% if user.is_authenticated %}{% else %}
+  <script type="text/javascript" src="{% static 'js/validation.js' %}"></script>
+  {% endif %}
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+
+{% block js %}
+{% endblock js %}
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ video.title }} | {{ course.title }}
+{% endblock title %}
+
+{% block head %}
+{% endblock head %}
+{% load humanize %}
+{% block body %}
+<div class="container-fluid my-3">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="card-header">
+                    {{ course.title }}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ lecture.title }}</h5>
+                    <div class="accordion" id="accordionExample">
+                        {% for section in section %}
+                        <div class="card">
+                            <div class="card-header" id="headingOne{{ section.id }}">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#collapseOne{{ section.id }}"
+                                        aria-expanded="true" aria-controls="collapseOne{{ section.id }}">
+                                        <img src="https://img.icons8.com/pastel-glyph/15/000000/plus.png" />
+                                        {{ section.title }}
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapseOne{{ section.id }}" class="collapse show"
+                                aria-labelledby="headingOne{{ section.id }}" data-parent="#accordionExample">
+                                <div class="card-body">{% for lecture in lecture %}{% if lecture.section == section %}
+                                {% if lecture.lecture_type == "NOT PREMIUM" %}
+                                    <li><a href="{{ lecture.lecture_slug }}">{{ lecture.title }}</a>
+                                    </li>{% else %}<li>{{ lecture.title }} <span class="badge badge-pill badge-secondary">PREMIUM VIDEO</span></li>
+                                    {% endif %}{% else %}{% endif %}{% endfor %}
+                                </div>
+                            </div>
+                        </div>{% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <h5 class="card-header">{{ video.title }}</h5>
+                <div class="card-body">
+                    <iframe width="100%" height="450" src="{{ video.video_url }}"></iframe>
+                </div>
+            </div>
+            <div class="card shadow-lg my-4">
+                <div class="card-body">
+                    <h3 class="card-title">Comments: ({{ lecture_comment.count }})</h3>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <form action="/courses/lecture/comment" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="comment" id="comment"
+                                        aria-describedby="text" placeholder="Enter Comment here">
+                                </div>
+                                <input type="hidden" name="lecture_id" id="lecture_id" value="{{ video.id }}">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% for comment in lecture_comment reversed %}
+                    <div class="row my-3">
+                        <div class="col-md-1"><img src="https://img.icons8.com/doodle/50/000000/user-male.png" /></div>
+                        <div class="col-md-11"><b> {{ comment.user.username }}</b> <span class="badge badge-secondary">
+                                {{ comment.timestamp | naturaltime }}</span>
+                            <div> {{ comment.comment}}</div>
+                        </div>
+                    </div>{% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

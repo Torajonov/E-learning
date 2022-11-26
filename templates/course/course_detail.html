@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ course.title }} | Courses Details
+{% endblock title %}
+
+{% block head %}
+{% endblock head %}
+
+{% block body %}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-sm-3 ">
+            <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
+                <img src="{{ course.thumbnail_url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ course.title }}</h5>
+                    <p class="card-text">{{ course.description | truncatechars:100}}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><img src="https://img.icons8.com/android/20/000000/time.png"/> {{ course.course_length }}</li>
+                    <li class="list-group-item"><img src="https://img.icons8.com/material-outlined/20/000000/video.png"/> {{ lecture.count }} Videos</li>      
+                    <li class="list-group-item">{% if subscription_course %}<img src="https://img.icons8.com/metro/20/000000/in-progress.png"/> Progress <span class="badge badge-danger">{{ subscription_course.progress }}</span>
+                    {% else %}<img src="https://img.icons8.com/metro/20/000000/price-tag-euro.png"/> {% if course.course_type == "PAID" %}₹ {{ course.course_price }} /-{% else %}{{ course.course_type }}{% endif %}{% endif %}</li>
+                </ul>
+                <div class="card-body">{% if subscription_course %}<span class="badge badge-secondary">SUBSCRIBED</span>{% else %}
+                    <a href="{% url 'Checkout' course.course_slug %}" class="btn btn-info">Subscribe Now</a>
+                {% endif %}</div>
+            </div>
+        </div>
+        <div class="col-sm-1">
+
+        </div>
+        <div class="col-sm-8 px-0 mx-0">
+            <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="card-header">
+                    {{ course.title }}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ lecture.title }}</h5>
+                    <p class="card-text">{{ course.description }}</p>
+                    <div class="accordion" id="accordionExample">
+                        {% for section in section %}
+                        <div class="card">
+                            <div class="card-header" id="headingOne{{ section.id }}">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-block text-left" type="button" data-toggle="collapse"
+                                        data-target="#collapseOne{{ section.id }}" aria-expanded="true"
+                                        aria-controls="collapseOne{{ section.id }}">
+                                        <img src="https://img.icons8.com/pastel-glyph/15/000000/plus.png"/> {{ section.title }}
+                                    </button>
+                                </h2>
+                            </div>
+
+                            <div id="collapseOne{{ section.id }}" class="collapse show"
+                                aria-labelledby="headingOne{{ section.id }}" data-parent="#accordionExample">
+                                <div class="card-body">{% for lecture in lecture %}{% if lecture.section == section %}
+                                {% if lecture.lecture_type == "NOT PREMIUM" %}
+                                    <li><a href="{% url 'lecture_detail' course.course_slug lecture.lecture_slug %}"><b style="font-size: small; color: black;">{{ lecture.title }}</b></a></li>
+                                    {% else %}<li>{% if subscription_course %}<a href="{% url 'lecture_detail' course.course_slug lecture.lecture_slug %}"><b style="font-size: small; color: black;">{{ lecture.title }}</b> <span class="badge badge-pill badge-secondary">PREMIUM VIDEO</span></a>
+                                    {% else %}<b style="font-size: small; color: black;">{{ lecture.title }}</b> <span class="badge badge-pill badge-secondary">PREMIUM VIDEO</span>{% endif %}</li>
+                                    {% endif %}
+                                    {% else %}{% endif %}{% endfor %}
+                                </div>
+                            </div>
+                        </div>{% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+
+{% block js %}
+<script>
+    $("#loginModal").modal()
+</script>
+{% endblock js %}
