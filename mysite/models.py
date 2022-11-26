@@ -17,8 +17,8 @@ COURSE_TYPE = [
 
 class Course(models.Model):
     title = models.CharField(max_length=100)
-    description = models.TextField()
-    image = models.ImageField('Kurs rasmi',upload_to='Coursepic/')
+    description = models.TextField()    
+    thumbnail_url = models.CharField(max_length=100)
     course_type = models.CharField(max_length=4,choices=COURSE_TYPE, default="FREE")
     course_length = models.CharField(max_length=20)
     course_slug = models.SlugField(default="-")
