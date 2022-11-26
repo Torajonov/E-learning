@@ -43,7 +43,7 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom shadow-sm">
     <div class="container">
-      <a class="navbar-brand" href="{% url 'home' %}">StartUP</a>
+      <a class="navbar-brand" href="{% url 'home' %}">English</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -52,13 +52,13 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="{% url 'courses' %}">Courses </a>
+            <a class="nav-link" href="{% url 'courses' %}">Kurslar </a>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="{% url 'bloghome' %}">Blog</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="{% url 'pricing' %}">Premium</a>
+            <a class="nav-link" href="{% url 'pricing' %}">Premium kurslar</a>
           </li>
 
         </ul>
@@ -69,20 +69,20 @@
          <img src="https://img.icons8.com/color/24/000000/user-male-circle.png"/> {{ request.user|upper }}
         </a>
         <div class="dropdown-menu" aria-labelledby="studentDropdown">
-          <a class="dropdown-item" href="{% url 'info' %}">User Account</a>
+          <a class="dropdown-item" href="{% url 'info' %}">Shaxsiy profil</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{% url 'handlelogout' %}">Logout</a>
+          <a class="dropdown-item" href="{% url 'handlelogout' %}">Chiqish</a>
         </div>
       </li>
           {% else %}
           <li class="nav-item active">
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-outline-success mx-2 my-1 btn-sm" data-toggle="modal"
-              data-target="#loginModal">Login</button>
+              data-target="#loginModal">Kirish</button>
           </li>
           <li class="nav-item">
             <button type="button" class="btn btn-success mx-1 my-1 btn-sm" data-toggle="modal"
-              data-target="#singupModal">Ragister</button>
+              data-target="#singupModal">Ro`yxatdan o`tish</button>
           </li>
           {% endif %}
         </ul>
@@ -96,7 +96,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="loginModalLabel">Login</h5>
+          <h5 class="modal-title" id="loginModalLabel">Kirish</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -105,14 +105,14 @@
           <div class="card">
             <div class="card-body">
               <center>
-                <h4 class="card-title">Login</h4>
+                <h4 class="card-title">Kirish</h4>
               </center>
               <form action="{% url 'handlelogin' %}" method="post" autocomplete="off">
                 {% csrf_token %}
                 <div class="form-group">
                   <label for="username">Username <b style="color: red;">*</b></label>
                   <input type="text" name="login_username" id="login_username" class="form-control form-control-sm"
-                    placeholder="Enter Username" aria-describedby="helpIdusername" required>
+                    placeholder="Usernameingiz" aria-describedby="helpIdusername" required>
                   <div id="helpIdusername" class="text-muted login-key-error-username" style="display: none;">
                   </div>
                 </div>
@@ -120,9 +120,9 @@
                 <div class="form-group">
                   <label for="password">Password <b style="color: red;">*</b></label>
                   <input type="password" name="login_password" id="login_password"
-                    class="form-control form-control-sm passwordshow" placeholder="Enter Password"
+                    class="form-control form-control-sm passwordshow" placeholder="Parol yarating"
                     aria-describedby="password" required>
-                  <small class="float-right showpassword">SHOW</small>
+                  <small class="float-right showpassword">Ko`rish</small>
                 </div>
 
                 <input type="submit" class="btn btn-primary" value="Login" id="loginsubmit">
@@ -131,7 +131,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Yopish</button>
         </div>
       </div>
     </div>
@@ -142,7 +142,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="singupModalLabel">Ragister</h5>
+          <h5 class="modal-title" id="singupModalLabel">Ro`yxatdan o`tish</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -151,46 +151,46 @@
           <div class="card">
             <div class="card-body">
               <center>
-                <h4 class="card-title">Ragister</h4>
+                <h4 class="card-title">Ro`yxatdan o`tish</h4>
               </center>
               <form action="{% url 'handleSignup' %}" method="post" autocomplete="off">
                 {% csrf_token %}
                 <div class="form-group">
                   <label for="username">Username <b style="color: red;">*</b></label>
                   <input type="text" name="username" id="username" class="form-control form-control-sm"
-                    placeholder="Enter Username" aria-describedby="helpIdusername" required>
+                    placeholder="Username kiriting" aria-describedby="helpIdusername" required>
                   <div id="helpIdusername" class="text-muted key-error-username" style="display: none;"></div>
                 </div>
 
                 <div class="form-group">
                   <label for="emailid">Email <b style="color: red;">*</b></label>
                   <input type="email" name="emailid" id="emailid" class="form-control form-control-sm"
-                    placeholder="Enter Email" aria-describedby="email" required>
+                    placeholder="Email manzilingiz" aria-describedby="email" required>
                   <div id="helpIdemail" class="text-muted key-error-email" style="display: none;"></div>
                 </div>
 
                 <div class="form-group">
-                  <label for="mobile">Mobile No <b style="color: red;">*</b></label>
+                  <label for="mobile">Telefon Raqamingiz <b style="color: red;">*</b></label>
                   <input type="tel" name="mobileno" id="mobileno" class="form-control form-control-sm"
-                    placeholder="Enter Mobile No 9876543210" aria-describedby="phone" pattern="^\d{10}$" required>
+                    placeholder="Telefon raqamingiz masalan +998901234567" aria-describedby="phone">
                 </div>
 
                 <div class="form-group">
-                  <label for="dob">Date of Birth <b style="color: red;">*</b></label>
+                  <label for="dob">Tugilgan sana<b style="color: red;">*</b></label>
                   <input type="date" name="dob" id="dob" class="form-control form-control-sm"
-                    placeholder="Enter Date of Birth" aria-describedby="dob" required>
+                    placeholder="Tugilgan sana" aria-describedby="dob" required>
                 </div>
 
                 <div class="form-group">
                   <label for="address">Address <b style="color: red;">*</b></label>
                   <input type="text" name="address" id="address" class="form-control form-control-sm"
-                    placeholder="Enter Full Address" aria-describedby="address" required>
+                    placeholder="Yashash Manzilingiz" aria-describedby="address" required>
                 </div>
 
                 <div class="form-group">
                   <label for="password">Password <b style="color: red;">*</b></label>
                   <input type="password" name="password" id="password"
-                    class="form-control form-control-sm passwordshowsingup" placeholder="Enter Password"
+                    class="form-control form-control-sm passwordshowsingup" placeholder="Parol kiriting va buni eslab qoling"
                     aria-describedby="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
                   <small class="float-right showpasswordsingup">SHOW</small>
                   <small>Password must contain the following:</small>
@@ -214,7 +214,7 @@
   {% block body %}
   {% endblock body %}
   <footer class="blog-footer">
-    <p>Made with ❤️ by <a href="https://twitter.com/yogeshnile">@YogeshNile</a></p>
+    <p>Made with ❤️ by <a href="https://twitter.com/yogeshnile">@Javlonbek</a></p>
     <p>
       <a href="#">Back to top</a>
     </p>
