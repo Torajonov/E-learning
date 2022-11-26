@@ -8,6 +8,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     author = models.CharField(max_length=30)
     content = models.TextField()
+    image = models.ImageField('Maqola rasmi',upload_to='Newspic/')
     slug = models.SlugField(default="-")
     timeStamp = models.DateTimeField(default=now)
 
