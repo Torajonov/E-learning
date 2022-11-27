@@ -52,7 +52,7 @@
             </div>
             <div class="card shadow-lg my-4">
                 <div class="card-body">
-                    <h3 class="card-title">Comments: ({{ lecture_comment.count }})</h3>
+                    <h3 class="card-title">Kommentariya: ({{ lecture_comment.count }})</h3>
                     <div class="row">
                         <div class="col-md-8">
                             <form action="/courses/lecture/comment" method="post">
@@ -62,7 +62,7 @@
                                         aria-describedby="text" placeholder="Enter Comment here">
                                 </div>
                                 <input type="hidden" name="lecture_id" id="lecture_id" value="{{ video.id }}">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Yuborish</button>
                             </form>
                         </div>
                     </div>

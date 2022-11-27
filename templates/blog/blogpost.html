@@ -38,13 +38,13 @@
         <input type="hidden" name="postSno" id="postSno" value="{{ post.id }}">
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>{% else %}
-    <p>Please loging to post comment</p>
+    <p>Iltimos, kommentariya qoldirish uchun tizimga kiring</p>
     <!-- Button trigger signup modal -->
     <button type="button" class="btn btn-primary my-2 mx-2 my-sm-0" data-toggle="modal"
-        data-target="#signupModal">SignUp</button>
+        data-target="#signupModal">Ro`yxatdan o`tish</button>
     <!-- Button trigger login modal -->
     <button type="button" class="btn btn-primary my-2 mx-2 my-sm-0" data-toggle="modal"
-        data-target="#loginModal">LogIn</button>
+        data-target="#loginModal">Kirish</button>
     {% endif %}
     {% for comment in comment %}
     <div class="row my-3">
@@ -60,7 +60,7 @@
                     Replay
                 </button>{% else %}
                 <button class="btn btn-sm btn-primary" disabled type="button">
-                    Login to Replay
+                    Takrorlash uchun tizimga kiring
                 </button>
                 {% endif %}
                 <br>
@@ -75,7 +75,7 @@
                                 <input type="hidden" name="perentSno" id="perentSno" value="{{ comment.id }}">
                             </div>
                             <input type="hidden" name="postSno" id="postSno" value="{{ post.id }}">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Yuborish</button>
                         </form>
                         {% endif %}
                     </div>

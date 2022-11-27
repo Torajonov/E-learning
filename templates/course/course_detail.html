@@ -22,8 +22,8 @@
                     <li class="list-group-item">{% if subscription_course %}<img src="https://img.icons8.com/metro/20/000000/in-progress.png"/> Progress <span class="badge badge-danger">{{ subscription_course.progress }}</span>
                     {% else %}<img src="https://img.icons8.com/metro/20/000000/price-tag-euro.png"/> {% if course.course_type == "PAID" %}₹ {{ course.course_price }} /-{% else %}{{ course.course_type }}{% endif %}{% endif %}</li>
                 </ul>
-                <div class="card-body">{% if subscription_course %}<span class="badge badge-secondary">SUBSCRIBED</span>{% else %}
-                    <a href="{% url 'Checkout' course.course_slug %}" class="btn btn-info">Subscribe Now</a>
+                <div class="card-body">{% if subscription_course %}<span class="badge badge-secondary">Obuna bo`lgan</span>{% else %}
+                    <a href="{% url 'Checkout' course.course_slug %}" class="btn btn-info">Obuna bo`ling</a>
                 {% endif %}</div>
             </div>
         </div>
