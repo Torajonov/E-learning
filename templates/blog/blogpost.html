@@ -26,7 +26,7 @@
     {% endif %}
 </div>
 <div class="container">
-    <h2>Comments: ({{ comment.count }})</h2>
+    <h2>Kommentariya: ({{ comment.count }})</h2>
     {% if user.is_authenticated %}
     <form action="/blog/postcomment" method="post">
         {% csrf_token %}

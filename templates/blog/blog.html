@@ -11,13 +11,13 @@
     <h2>Yangiliklar</h2><br>
     {% for post in allposts %}
     <div class="card">
-        <strong class="d-inline-block text-primary px-2">Article by {{ post.author }}</strong>
+        <strong class="d-inline-block text-primary px-2">Muallif:{{ post.author }}</strong>
         <div class="card-body">
           <h5 class="card-title">{{ post.title }}</h5>
 
           <div class="mb-1 text-muted">{{ post.timeStamp | naturaltime }}</div>
           <p class="card-text previews">{{ post.content| truncatechars:200 }}</p>
-          <a href="/blog/{{ post.slug }}" class="btn btn-primary">Read More...</a>
+          <a href="/blog/{{ post.slug }}" class="btn btn-primary">Ko`proq o`qish</a>
         </div>
       </div><br>
       {% endfor %}
